@@ -20,3 +20,13 @@ Tem sintaxe simples, tipos estaticos e bytecode para uma VM de pilha.
 - [ ] numeros com ponto flutuante
 - [ ] importar outros arquivos
 - [ ] gerar codigo nativo
+
+## Exemplo
+
+```text
+fn main() -> int {
+    let resultado: int = 6 * 7;
+    print(resultado);
+    return 0;
+}
+```
