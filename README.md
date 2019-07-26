@@ -30,3 +30,11 @@ fn main() -> int {
     return 0;
 }
 ```
+
+## Rodar
+
+```sh
+make
+make test
+build/cairn --parse examples/arithmetic.crn
+```
