@@ -15,7 +15,7 @@ Tem sintaxe simples, tipos estaticos e bytecode para uma VM de pilha.
 - [ ] codigo intermediario
 - [ ] blocos e analise de fluxo
 - [ ] otimizacoes basicas
-- [ ] testes automaticos
+- [x] testes automaticos
 - [ ] textos (strings)
 - [ ] numeros com ponto flutuante
 - [ ] importar outros arquivos
