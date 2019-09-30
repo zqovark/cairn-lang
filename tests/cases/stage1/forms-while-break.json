@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{while true{break;}return 0;}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}

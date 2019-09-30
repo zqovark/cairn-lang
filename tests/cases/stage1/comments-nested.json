@@ -1,0 +1,8 @@
+{
+  "source": "/* outer /* inner */ tail */ fn main()->int{return 0;}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}

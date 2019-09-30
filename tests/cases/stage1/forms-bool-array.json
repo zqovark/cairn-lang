@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{let a:bool[4];return 0;}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}

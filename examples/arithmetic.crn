@@ -1,5 +1,4 @@
 fn main() -> int {
-    let answer: int = 6 * 7;
-    print(answer);
+    print(6 * 7);
     return 0;
 }

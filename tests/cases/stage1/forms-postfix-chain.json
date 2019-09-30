@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{return f(1,2)[3];}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}

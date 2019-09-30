@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{if true{return 1;}else if false{return 2;}else{return 3;}}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}
