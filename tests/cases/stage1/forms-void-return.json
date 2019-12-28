@@ -1,0 +1,8 @@
+{
+  "source": "fn f()->void{return;}",
+  "stdout": "",
+  "status": 0,
+  "args": [
+    "--parse"
+  ]
+}

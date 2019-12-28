@@ -1,0 +1,11 @@
+{
+  "source": "let x:int;",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--parse"
+  ],
+  "stderr_contains": [
+    "expected"
+  ]
+}

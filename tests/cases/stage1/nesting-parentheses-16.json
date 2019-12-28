@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{return ((((((((((((((((7))))))))))))))));}",
+  "stdout": "program\n  function main :int\n    block\n      return\n        int 7\n",
+  "status": 0,
+  "args": [
+    "--ast"
+  ]
+}

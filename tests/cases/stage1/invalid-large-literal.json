@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{return 9223372036854775808;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--parse"
+  ],
+  "stderr_contains": [
+    "64-bit"
+  ]
+}

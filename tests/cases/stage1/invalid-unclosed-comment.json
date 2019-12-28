@@ -1,0 +1,11 @@
+{
+  "source": "/* unclosed",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--parse"
+  ],
+  "stderr_contains": [
+    "unterminated"
+  ]
+}

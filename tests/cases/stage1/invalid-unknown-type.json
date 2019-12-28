@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{let x:unknown;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--parse"
+  ],
+  "stderr_contains": [
+    "expected type"
+  ]
+}

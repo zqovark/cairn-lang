@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{return 1 & 2;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--parse"
+  ],
+  "stderr_contains": [
+    "unexpected byte"
+  ]
+}
