@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{return 11 % 3 == 2;}",
+  "stdout": "program\n  function main :int\n    block\n      return\n        binary ==\n          binary %\n            int 11\n            int 3\n          int 2\n",
+  "status": 0,
+  "args": [
+    "--ast"
+  ]
+}
