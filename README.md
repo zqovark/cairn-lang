@@ -43,3 +43,4 @@ build/cairn --parse examples/arithmetic.crn
 
 Tipos: `int`, `bool` e `void` no retorno de funcoes.
 O compilador gera bytecode. A execucao fica por conta da VM.
+Variaveis usam `let`. Funcoes usam `fn`. Blocos usam chaves.
