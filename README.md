@@ -38,3 +38,7 @@ make
 make test
 build/cairn --parse examples/arithmetic.crn
 ```
+
+## Notas
+
+Tipos: `int`, `bool` e `void` no retorno de funcoes.
