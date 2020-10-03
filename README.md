@@ -42,3 +42,4 @@ build/cairn --parse examples/arithmetic.crn
 ## Notas
 
 Tipos: `int`, `bool` e `void` no retorno de funcoes.
+O compilador gera bytecode. A execucao fica por conta da VM.
