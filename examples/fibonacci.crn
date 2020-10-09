@@ -1,0 +1,15 @@
+fn fibonacci(n: int) -> int {
+    if n <= 1 { return n; }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+fn main() -> int {
+    let results: int[10];
+    let i: int = 0;
+    while i < 10 {
+        results[i] = fibonacci(i);
+        print(results[i]);
+        i = i + 1;
+    }
+    return 0;
+}
