@@ -169,6 +169,7 @@ typedef struct {
     CodeFunction *functions;
     size_t count;
     int entry;
+    bool owns_names;
 } Bytecode;
 const char *op_name(Op);
 bool compile_direct(Node *, Bytecode *, const char *);
