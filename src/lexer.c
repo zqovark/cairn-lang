@@ -86,6 +86,10 @@ bool lex_source(Lexer *l) {
             } while (alpha((unsigned char)*p) || digit((unsigned char)*p));
             t.length = (size_t)(p - t.text);
             t.kind = T_ID;
+            if (t.length > 63) {
+                diagnostic(l->path, t, "identifier length exceeds 63 bytes");
+                l->errors++;
+            }
             for (int k = T_FN; k <= T_CONTINUE; k++)
                 if (strlen(names[k]) == t.length && !memcmp(names[k], t.text, t.length)) {
                     t.kind = (TokenKind)k;
