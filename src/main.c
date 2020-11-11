@@ -39,23 +39,56 @@ static char *read_source(const char *path) {
     return s;
 }
 int main(int argc, char **argv) {
-    if (argc == 2 && !strcmp(argv[1], "--version")) {
-        puts("cairn 0.1.0 (reconstructed teaching history)");
-        return 0;
+    const char *mode = "--run", *path = NULL, *output = NULL;
+    uint64_t budget = 1000000;
+    for (int i = 1; i < argc; i++) {
+        if (!strcmp(argv[i], "--version")) {
+            puts("cairn 0.2.0 (reconstructed teaching history)");
+            return 0;
+        }
+        if (!strcmp(argv[i], "--budget")) {
+            if (++i >= argc)
+                return 2;
+            char *end;
+            budget = strtoull(argv[i], &end, 10);
+            if (!budget || *end)
+                return 2;
+        } else if (!strcmp(argv[i], "-o")) {
+            if (++i >= argc)
+                return 2;
+            output = argv[i];
+        } else if (argv[i][0] == '-')
+            mode = argv[i];
+        else if (!path)
+            path = argv[i];
+        else
+            return 2;
     }
-    if (argc != 3 ||
-        (strcmp(argv[1], "--tokens") && strcmp(argv[1], "--ast") && strcmp(argv[1], "--parse"))) {
-        fputs("usage: cairn --tokens|--ast|--parse source.crn\n", stderr);
+    if (!path) {
+        fputs("usage: cairn [--run|--check|--tokens|--ast|--parse|--bytecode|--emit|--exec] [-o "
+              "output] [--budget steps] file\n",
+              stderr);
         return 2;
     }
-    char *source = read_source(argv[2]);
+    Bytecode b = {0};
+    Parser p = {0};
+    char *source = NULL;
+    int status = 0;
+    if (!strcmp(mode, "--exec")) {
+        if (!bytecode_read(&b, path))
+            return 1;
+        int64_t value;
+        if (!vm_run(&b, stdout, stderr, budget, &value))
+            status = 1;
+        bytecode_free(&b);
+        return status;
+    }
+    source = read_source(path);
     if (!source)
         return 2;
-    Parser p = {0};
-    int status = 0;
-    if (!strcmp(argv[1], "--tokens")) {
+    if (!strcmp(mode, "--tokens")) {
         p.lex.source = source;
-        p.lex.path = argv[2];
+        p.lex.path = path;
         if (!lex_source(&p.lex))
             status = 1;
         else
@@ -64,13 +97,49 @@ int main(int argc, char **argv) {
                 printf("%d:%d %-12s %.*s\n", t.line, t.column, token_name(t.kind), (int)t.length,
                        t.text);
             }
-    } else {
-        Node *root = parse_program(&p, source, argv[2]);
-        if (!root)
-            status = 1;
-        else if (!strcmp(argv[1], "--ast"))
-            dump_ast(root, stdout, 0);
+        goto done;
     }
+    Node *root = parse_program(&p, source, path);
+    if (!root) {
+        status = 1;
+        goto done;
+    }
+    if (!strcmp(mode, "--ast")) {
+        dump_ast(root, stdout, 0);
+        goto done;
+    }
+    if (!strcmp(mode, "--parse"))
+        goto done;
+    if (!analyze(root, path)) {
+        status = 1;
+        goto done;
+    }
+    if (!strcmp(mode, "--check"))
+        goto done;
+    if (strcmp(mode, "--run") && strcmp(mode, "--bytecode") && strcmp(mode, "--emit")) {
+        fprintf(stderr, "unknown mode: %s\n", mode);
+        status = 2;
+        goto done;
+    }
+    if (!compile_direct(root, &b, path) || !bytecode_verify(&b, stderr)) {
+        status = 1;
+        goto done;
+    }
+    if (!strcmp(mode, "--bytecode"))
+        bytecode_dump(&b, stdout);
+    else if (!strcmp(mode, "--emit")) {
+        if (!output) {
+            fputs("--emit requires -o output\n", stderr);
+            status = 2;
+        } else if (!bytecode_write(&b, output))
+            status = 1;
+    } else {
+        int64_t value;
+        if (!vm_run(&b, stdout, stderr, budget, &value))
+            status = 1;
+    }
+done:
+    bytecode_free(&b);
     parser_free(&p);
     free(source);
     return status;
