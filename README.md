@@ -7,7 +7,7 @@ Tem sintaxe simples, tipos estaticos e bytecode para uma VM de pilha.
 
 - [x] lexer e comentarios
 - [x] parser e arvore de sintaxe
-- [ ] inteiros, booleanos e checagem de tipos
+- [x] inteiros, booleanos e checagem de tipos
 - [ ] funcoes e recursao
 - [ ] if, while, break e continue
 - [ ] vetores locais e limites de acesso
