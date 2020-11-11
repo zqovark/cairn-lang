@@ -110,7 +110,12 @@ static Node *primary(Parser *p, int depth) {
         error(p, t, "expected expression");
         n = node(p, N_INT, t);
     }
+    int postfix = 0;
     while (peek(p).kind == T_LP || peek(p).kind == T_LS) {
+        if (++postfix > 128) {
+            error(p, t, "postfix nesting limit exceeded");
+            break;
+        }
         if (match(p, T_LP)) {
             Node *call = node(p, N_CALL, t);
             if (n->kind != N_VAR)
@@ -144,7 +149,12 @@ static Node *expression(Parser *p, int min, int depth) {
         return node(p, N_INT, peek(p));
     }
     Node *left = primary(p, depth);
+    int operators = 0;
     while (precedence(peek(p).kind) >= min) {
+        if (++operators > 256) {
+            error(p, peek(p), "expression operator limit exceeded");
+            break;
+        }
         Token op = advance(p);
         Node *n = node(p, N_BINARY, op);
         n->op = op.kind;
@@ -227,6 +237,12 @@ static Node *block(Parser *p, int depth) {
         return n;
     }
     while (peek(p).kind != T_RB && peek(p).kind != T_EOF) {
+        if (n->count >= 1024) {
+            error(p, peek(p), "block statement limit exceeded");
+            while (peek(p).kind != T_RB && peek(p).kind != T_EOF)
+                advance(p);
+            break;
+        }
         size_t start = p->position;
         int before = p->errors;
         push(p, n, statement(p, depth));
