@@ -8,10 +8,10 @@ Tem sintaxe simples, tipos estaticos e bytecode para uma VM de pilha.
 - [x] lexer e comentarios
 - [x] parser e arvore de sintaxe
 - [x] inteiros, booleanos e checagem de tipos
-- [ ] funcoes e recursao
-- [ ] if, while, break e continue
-- [ ] vetores locais e limites de acesso
-- [ ] bytecode e vm
+- [x] funcoes e recursao
+- [x] if, while, break e continue
+- [x] vetores locais e limites de acesso
+- [x] bytecode e vm
 - [ ] codigo intermediario
 - [ ] blocos e analise de fluxo
 - [ ] otimizacoes basicas
@@ -36,7 +36,7 @@ fn main() -> int {
 ```sh
 make
 make test
-build/cairn --parse examples/arithmetic.crn
+build/cairn examples/arithmetic.crn
 ```
 
 ## Notas
