@@ -1,0 +1,8 @@
+{
+  "source": "fn recurse()->int{return recurse();}fn main() -> int { print(recurse()); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "call depth limit"
+  ]
+}

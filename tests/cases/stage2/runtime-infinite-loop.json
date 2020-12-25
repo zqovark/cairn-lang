@@ -1,0 +1,13 @@
+{
+  "source": "fn main()->int{while true{}return 0;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--run",
+    "--budget",
+    "100"
+  ],
+  "stderr_contains": [
+    "instruction budget"
+  ]
+}

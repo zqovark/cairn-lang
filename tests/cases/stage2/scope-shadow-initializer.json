@@ -1,0 +1,5 @@
+{
+  "source": "fn main()->int{let x:int=7;{let x:int=x+3;print(x);}print(x);return 0;}",
+  "stdout": "10\n7\n",
+  "status": 0
+}

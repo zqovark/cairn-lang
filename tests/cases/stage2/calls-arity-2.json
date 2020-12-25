@@ -1,0 +1,5 @@
+{
+  "source": "fn sum(x0:int,x1:int)->int{return x0+x1;} fn main() -> int { print(sum(1,2)); return 0; }\n",
+  "stdout": "3\n",
+  "status": 0
+}
