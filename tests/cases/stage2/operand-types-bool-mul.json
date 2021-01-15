@@ -1,0 +1,11 @@
+{
+  "source": "fn main() -> int { print(true * false); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "operands must be int"
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "source": "fn even(n:int)->bool{if n==0{return true;}return odd(n-1);}fn odd(n:int)->bool{if n==0{return false;}return even(n-1);}fn main() -> int { print(even(14)); return 0; }\n",
+  "stdout": "true\n",
+  "status": 0
+}
