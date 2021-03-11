@@ -1,0 +1,5 @@
+{
+  "source": "fn witness()->bool{print(99);return true;} fn main() -> int { print(true && witness()); return 0; }\n",
+  "stdout": "99\ntrue\n",
+  "status": 0
+}
