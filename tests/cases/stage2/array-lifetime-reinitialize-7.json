@@ -1,0 +1,5 @@
+{
+  "source": "fn main()->int{let i:int=0;let total:int=0;while i<7{let a:int[2];total=total+a[0];a[0]=9;i=i+1;}print(total);return 0;}",
+  "stdout": "0\n",
+  "status": 0
+}

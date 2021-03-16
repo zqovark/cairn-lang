@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{return true;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "return type"
+  ]
+}
