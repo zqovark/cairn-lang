@@ -4,15 +4,15 @@ fn main() -> int {
     values[3] = 1; values[4] = 5;
     let i: int = 0;
     while i < 5 {
-        let j: int = 0;
-        while j < 4 - i {
-            if values[j] > values[j + 1] {
-                let temporary: int = values[j];
-                values[j] = values[j + 1];
-                values[j + 1] = temporary;
-            }
+        let smallest: int = i;
+        let j: int = i + 1;
+        while j < 5 {
+            if values[j] < values[smallest] { smallest = j; }
             j = j + 1;
         }
+        let temporary: int = values[i];
+        values[i] = values[smallest];
+        values[smallest] = temporary;
         i = i + 1;
     }
     i = 0;
