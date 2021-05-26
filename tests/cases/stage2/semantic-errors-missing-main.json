@@ -1,0 +1,11 @@
+{
+  "source": "fn f()->int{return 1;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "missing main"
+  ]
+}
