@@ -1,0 +1,5 @@
+{
+  "source": "fn main()->int{let a:int[16];a[0]=73;print(a[0]);return 0;}",
+  "stdout": "73\n",
+  "status": 0
+}
