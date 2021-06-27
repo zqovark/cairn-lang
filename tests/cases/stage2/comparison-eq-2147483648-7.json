@@ -1,0 +1,5 @@
+{
+  "source": "fn main() -> int { print((2147483648) == (7)); return 0; }\n",
+  "stdout": "false\n",
+  "status": 0
+}

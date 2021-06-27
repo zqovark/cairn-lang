@@ -1,0 +1,11 @@
+{
+  "source": "fn main() -> int { print(1 || 2); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "logical operands"
+  ]
+}

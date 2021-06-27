@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->bool{return true;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "main must"
+  ]
+}
