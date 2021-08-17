@@ -1,15 +1,8 @@
 fn fibonacci(n: int) -> int {
-    let previous: int = 0;
-    let current: int = 1;
-    let i: int = 0;
-    while i < n {
-        let next: int = previous + current;
-        previous = current;
-        current = next;
-        i = i + 1;
-    }
-    return previous;
+    if n <= 1 { return n; }
+    return fibonacci(n - 1) + fibonacci(n - 2);
 }
+
 fn main() -> int {
     let results: int[10];
     let i: int = 0;
