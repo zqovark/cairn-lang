@@ -1,0 +1,8 @@
+{
+  "source": "fn main()->int{let a:int[7];a[-1]=3;return 0;}",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "array index out of bounds"
+  ]
+}
