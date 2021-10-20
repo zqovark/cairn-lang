@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{continue;return 0;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "outside a loop"
+  ]
+}
