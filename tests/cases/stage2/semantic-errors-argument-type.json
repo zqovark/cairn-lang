@@ -1,0 +1,11 @@
+{
+  "source": "fn f(x:int)->int{return x;}fn main() -> int { print(f(true)); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "argument type"
+  ]
+}
