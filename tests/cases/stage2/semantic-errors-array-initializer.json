@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{let a:int[2]=3;return 0;}",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--check"
+  ],
+  "stderr_contains": [
+    "array initializers"
+  ]
+}
