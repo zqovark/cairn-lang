@@ -1,0 +1,5 @@
+{
+  "source": "fn main() -> int { print((3037000499) - (3037000499)); return 0; }\n",
+  "stdout": "0\n",
+  "status": 0
+}
