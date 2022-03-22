@@ -1,0 +1,5 @@
+{
+  "source": "fn main() -> int { print((-7) < (-3)); return 0; }\n",
+  "stdout": "true\n",
+  "status": 0
+}
