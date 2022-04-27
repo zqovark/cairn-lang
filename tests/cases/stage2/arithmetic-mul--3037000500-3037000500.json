@@ -1,0 +1,8 @@
+{
+  "source": "fn main() -> int { print((-3037000500) * (3037000500)); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "integer overflow"
+  ]
+}
