@@ -4,7 +4,7 @@ SOURCES := $(wildcard src/*.c)
 
 .PHONY: all test clean sanitize
 all: build/cairn
-build/cairn: $(SOURCES) src/cairn.h
+build/cairn: $(SOURCES) $(wildcard src/*.h)
 	mkdir -p build
 	$(CC) $(CFLAGS) $(SOURCES) -o $@
 test: build/cairn
