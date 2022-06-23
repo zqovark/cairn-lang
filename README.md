@@ -45,3 +45,4 @@ Tipos: `int`, `bool` e `void` no retorno de funcoes.
 O compilador gera bytecode. A execucao fica por conta da VM.
 Variaveis usam `let`. Funcoes usam `fn`. Blocos usam chaves.
 Etapas: tokens, parser, tipos, IR, bytecode e VM.
+As opcoes `--tokens` e `--ast` mostram as etapas de sintaxe.
