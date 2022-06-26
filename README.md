@@ -46,3 +46,4 @@ O compilador gera bytecode. A execucao fica por conta da VM.
 Variaveis usam `let`. Funcoes usam `fn`. Blocos usam chaves.
 Etapas: tokens, parser, tipos, IR, bytecode e VM.
 As opcoes `--tokens` e `--ast` mostram as etapas de sintaxe.
+Precisa de compilador C17, Make e Python 3 para os testes.
