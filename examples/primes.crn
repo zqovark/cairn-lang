@@ -1,0 +1,16 @@
+fn main() -> int {
+    let composite: bool[50];
+    let n: int = 2;
+    while n < 50 {
+        if !composite[n] {
+            print(n);
+            let multiple: int = n * n;
+            while multiple < 50 {
+                composite[multiple] = true;
+                multiple = multiple + n;
+            }
+        }
+        n = n + 1;
+    }
+    return 0;
+}
