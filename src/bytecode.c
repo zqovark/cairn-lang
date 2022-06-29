@@ -1,6 +1,8 @@
 #include "cairn.h"
 #include <ctype.h>
+#include <errno.h>
 #include <inttypes.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -160,20 +162,57 @@ bool bytecode_write(const Bytecode *b, const char *path) {
         ok = false;
     return ok;
 }
+static bool word(FILE *f, char *out, size_t capacity) {
+    int ch;
+    do {
+        ch = fgetc(f);
+    } while (ch != EOF && isspace((unsigned char)ch));
+    if (ch == EOF)
+        return false;
+    size_t length = 0;
+    bool long_word = false;
+    do {
+        if (length + 1 < capacity)
+            out[length++] = (char)ch;
+        else
+            long_word = true;
+        ch = fgetc(f);
+    } while (ch != EOF && !isspace((unsigned char)ch));
+    out[length] = 0;
+    return !long_word;
+}
+static bool number(FILE *f, int64_t low, int64_t high, int64_t *out) {
+    char text[128], *end;
+    if (!word(f, text, sizeof(text)))
+        return false;
+    errno = 0;
+    intmax_t value = strtoimax(text, &end, 10);
+    if (errno || *end || end == text || value < low || value > high)
+        return false;
+    *out = (int64_t)value;
+    return true;
+}
 bool bytecode_read(Bytecode *b, const char *path) {
     FILE *f = fopen(path, "rb");
     if (!f) {
         perror(path);
         return false;
     }
-    char magic[32];
     bool ok = false;
+    char magic[32];
+    int64_t count, entry;
     b->owns_names = true;
-    if (!fgets(magic, sizeof(magic), f) || strcmp(magic, "CAIRNBC1\n") ||
-        fscanf(f, "%zu %d", &b->count, &b->entry) != 2 || b->count < 1 || b->count > 256) {
-        b->count = 0;
+    if (fseek(f, 0, SEEK_END) != 0)
         goto done;
-    }
+    long bytes = ftell(f);
+    if (bytes < 0 || bytes > 16 * 1024 * 1024)
+        goto done;
+    rewind(f);
+    if (!fgets(magic, sizeof(magic), f) || strcmp(magic, "CAIRNBC1\n") ||
+        !number(f, 1, 256, &count) || !number(f, 0, count - 1, &entry))
+        goto done;
+    b->count = (size_t)count;
+    b->entry = (int)entry;
     b->functions = calloc(b->count, sizeof(*b->functions));
     if (!b->functions) {
         b->count = 0;
@@ -182,24 +221,30 @@ bool bytecode_read(Bytecode *b, const char *path) {
     for (size_t i = 0; i < b->count; i++) {
         CodeFunction *cf = &b->functions[i];
         char name[64];
-        if (fscanf(f, "%63s %d %d %zu", name, &cf->arity, &cf->slots, &cf->count) != 4 ||
-            cf->count < 1 || cf->count > 100000) {
-            cf->count = 0;
+        int64_t arity, slots, instructions;
+        if (!word(f, name, sizeof(name)) || !(isalpha((unsigned char)name[0]) || name[0] == '_'))
             goto done;
-        }
+        for (size_t j = 1; name[j]; j++)
+            if (!(isalnum((unsigned char)name[j]) || name[j] == '_'))
+                goto done;
+        if (!number(f, 0, 16, &arity) || !number(f, arity, 16384, &slots) ||
+            !number(f, 1, 100000, &instructions))
+            goto done;
+        cf->arity = (int)arity;
+        cf->slots = (int)slots;
+        cf->count = (size_t)instructions;
         cf->name = malloc(strlen(name) + 1);
         cf->code = calloc(cf->count, sizeof(*cf->code));
         if (!cf->name || !cf->code)
             goto done;
         strcpy(cf->name, name);
         for (size_t j = 0; j < cf->count; j++) {
-            int op;
-            Instruction *in = &cf->code[j];
-            if (fscanf(f, "%d %d %d %" SCNd64 " %d", &op, &in->a, &in->b, &in->value, &in->line) !=
-                    5 ||
-                op < 0 || op > B_NOP)
+            int64_t op, a, rhs, value, line;
+            if (!number(f, 0, B_NOP, &op) || !number(f, INT_MIN, INT_MAX, &a) ||
+                !number(f, INT_MIN, INT_MAX, &rhs) || !number(f, INT64_MIN, INT64_MAX, &value) ||
+                !number(f, 1, INT_MAX, &line))
                 goto done;
-            in->op = (Op)op;
+            cf->code[j] = (Instruction){(Op)op, (int)a, (int)rhs, value, (int)line};
         }
     }
     {
