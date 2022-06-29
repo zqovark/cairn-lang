@@ -172,7 +172,6 @@ typedef struct {
     bool owns_names;
 } Bytecode;
 const char *op_name(Op);
-bool compile_direct(Node *, Bytecode *, const char *);
 void bytecode_free(Bytecode *);
 void bytecode_dump(const Bytecode *, FILE *);
 bool bytecode_verify(const Bytecode *, FILE *);
