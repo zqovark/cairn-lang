@@ -1,0 +1,11 @@
+fn witness() -> bool {
+    print(99);
+    return true;
+}
+
+fn main() -> int {
+    let enabled: bool = false;
+    print(enabled && witness());
+    print(!enabled || witness());
+    return 0;
+}
