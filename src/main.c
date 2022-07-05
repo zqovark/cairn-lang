@@ -1,4 +1,5 @@
 #include "cairn.h"
+#include "ir.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -41,10 +42,15 @@ static char *read_source(const char *path) {
 int main(int argc, char **argv) {
     const char *mode = "--run", *path = NULL, *output = NULL;
     uint64_t budget = 1000000;
+    bool optimize = true;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "--version")) {
-            puts("cairn 0.2.0 (reconstructed teaching history)");
+            puts("cairn 0.3.0 (reconstructed teaching history)");
             return 0;
+        }
+        if (!strcmp(argv[i], "--no-opt")) {
+            optimize = false;
+            continue;
         }
         if (!strcmp(argv[i], "--budget")) {
             if (++i >= argc)
@@ -65,12 +71,15 @@ int main(int argc, char **argv) {
             return 2;
     }
     if (!path) {
-        fputs("usage: cairn [--run|--check|--tokens|--ast|--parse|--bytecode|--emit|--exec] [-o "
+        fputs("usage: cairn "
+              "[--run|--check|--tokens|--ast|--parse|--bytecode|--ir|--cfg|--stats|--emit|--exec] "
+              "[-o "
               "output] [--budget steps] file\n",
               stderr);
         return 2;
     }
     Bytecode b = {0};
+    IRProgram ir = {0};
     Parser p = {0};
     char *source = NULL;
     int status = 0;
@@ -116,13 +125,38 @@ int main(int argc, char **argv) {
     }
     if (!strcmp(mode, "--check"))
         goto done;
-    if (strcmp(mode, "--run") && strcmp(mode, "--bytecode") && strcmp(mode, "--emit")) {
+    if (strcmp(mode, "--run") && strcmp(mode, "--bytecode") && strcmp(mode, "--emit") &&
+        strcmp(mode, "--ir") && strcmp(mode, "--cfg") && strcmp(mode, "--stats")) {
         fprintf(stderr, "unknown mode: %s\n", mode);
         status = 2;
         goto done;
     }
-    if (!compile_direct(root, &b, path) || !bytecode_verify(&b, stderr)) {
+    if (!ir_build(root, &ir, path)) {
         status = 1;
+        goto done;
+    }
+    if (optimize)
+        ir_optimize(&ir);
+    if (!strcmp(mode, "--ir")) {
+        ir_dump(&ir, stdout);
+        goto done;
+    }
+    if (!strcmp(mode, "--cfg")) {
+        flow_dump(&ir, stdout);
+        goto done;
+    }
+    if (!ir_lower(&ir, &b) || !bytecode_verify(&b, stderr)) {
+        status = 1;
+        goto done;
+    }
+    if (!strcmp(mode, "--stats")) {
+        for (size_t fi = 0; fi < ir.count; fi++) {
+            size_t active = 0;
+            for (size_t pc = 0; pc < ir.functions[fi].count; pc++)
+                active += ir.functions[fi].code[pc].op != B_NOP;
+            printf("%s: ir=%zu bytecode=%zu\n", ir.functions[fi].name, active,
+                   b.functions[fi].count);
+        }
         goto done;
     }
     if (!strcmp(mode, "--bytecode"))
@@ -140,6 +174,7 @@ int main(int argc, char **argv) {
     }
 done:
     bytecode_free(&b);
+    ir_free(&ir);
     parser_free(&p);
     free(source);
     return status;
