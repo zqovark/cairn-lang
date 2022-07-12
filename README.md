@@ -12,9 +12,9 @@ Tem sintaxe simples, tipos estaticos e bytecode para uma VM de pilha.
 - [x] if, while, break e continue
 - [x] vetores locais e limites de acesso
 - [x] bytecode e vm
-- [ ] codigo intermediario
-- [ ] blocos e analise de fluxo
-- [ ] otimizacoes basicas
+- [x] codigo intermediario
+- [x] blocos e analise de fluxo
+- [x] otimizacoes basicas
 - [x] testes automaticos
 - [ ] textos (strings)
 - [ ] numeros com ponto flutuante
@@ -47,3 +47,4 @@ Variaveis usam `let`. Funcoes usam `fn`. Blocos usam chaves.
 Etapas: tokens, parser, tipos, IR, bytecode e VM.
 As opcoes `--tokens` e `--ast` mostram as etapas de sintaxe.
 Precisa de compilador C17, Make e Python 3 para os testes.
+Use `--ir` e `--cfg` para inspecionar a IR, ou `--no-opt` para desligar as otimizacoes.

@@ -13,8 +13,8 @@ BINARY = Path(os.environ.get('CAIRN_BINARY', ROOT / 'build/cairn')).resolve()
 def run_case(path):
     case = json.loads(path.read_text())
     with tempfile.TemporaryDirectory(prefix='cairn-test-') as directory:
-        source = Path(directory) / 'case.crn'
-        source.write_text(case['source'])
+        source = Path(directory) / ('case.cbc' if 'bytecode' in case else 'case.crn')
+        source.write_text(case.get('bytecode', case.get('source', '')))
         command = [str(BINARY), *case.get('args', ['--run']), str(source)]
         result = subprocess.run(command, capture_output=True, text=True, timeout=5)
         assert result.returncode == case.get('status', 0), f'exit {result.returncode}; {result.stderr}'
@@ -23,6 +23,14 @@ def run_case(path):
         for field in ('stdout', 'stderr'):
             for expected in case.get(field + '_contains', []):
                 assert expected in getattr(result, field), f'{expected!r} absent in {getattr(result, field)!r}'
+        if case.get('roundtrip'):
+            compiled = Path(directory) / 'saved.cbc'
+            emitted = subprocess.run([str(BINARY), '--emit', '-o', str(compiled), str(source)], capture_output=True, text=True, timeout=5)
+            assert emitted.returncode == 0, emitted.stderr
+            source.unlink()
+            saved = subprocess.run([str(BINARY), '--exec', str(compiled)], capture_output=True, text=True, timeout=5)
+            assert (saved.returncode, saved.stdout) == (result.returncode, result.stdout), 'saved bytecode changed behavior'
+            source.write_text(case['source'])
         if case.get('compare_optimized'):
             other = subprocess.run([str(BINARY), '--run', '--no-opt', str(source)], capture_output=True, text=True, timeout=5)
             assert (result.returncode, result.stdout) == (other.returncode, other.stdout), 'optimizer changed observable behavior'
