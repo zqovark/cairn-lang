@@ -1,0 +1,11 @@
+{
+  "source": "fn main()->int{let b:bool=false;print(b && true);return 0;}",
+  "status": 0,
+  "args": [
+    "--cfg",
+    "--no-opt"
+  ],
+  "stdout_contains": [
+    "live-out={r"
+  ]
+}

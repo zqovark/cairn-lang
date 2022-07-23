@@ -1,0 +1,7 @@
+{
+  "source": "fn side()->bool{print(91);return false;}fn main()->int{print(false && side());return 0;}",
+  "stdout": "false\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}

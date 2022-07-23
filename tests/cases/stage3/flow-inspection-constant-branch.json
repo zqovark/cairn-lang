@@ -1,0 +1,13 @@
+{
+  "source": "fn main()->int{if true{print(7);}return 0;}",
+  "status": 0,
+  "args": [
+    "--cfg",
+    "--no-opt"
+  ],
+  "stdout_contains": [
+    "function main:",
+    "blocks",
+    "live-in="
+  ]
+}

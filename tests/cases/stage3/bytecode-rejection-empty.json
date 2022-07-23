@@ -1,0 +1,12 @@
+{
+  "source": "",
+  "stdout": "",
+  "status": 1,
+  "args": [
+    "--exec"
+  ],
+  "stderr_contains": [
+    "malformed bytecode"
+  ],
+  "bytecode": ""
+}

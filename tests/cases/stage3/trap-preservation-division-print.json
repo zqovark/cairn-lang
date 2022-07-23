@@ -1,0 +1,9 @@
+{
+  "source": "fn main() -> int { print(1 / 0); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "division by zero"
+  ],
+  "compare_optimized": true
+}
