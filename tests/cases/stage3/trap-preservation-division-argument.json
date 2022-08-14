@@ -1,0 +1,9 @@
+{
+  "source": "fn f(x:int)->int{return x;}fn main() -> int { print(f(1 / 0)); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "division by zero"
+  ],
+  "compare_optimized": true
+}
