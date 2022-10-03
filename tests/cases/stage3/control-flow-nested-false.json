@@ -1,0 +1,7 @@
+{
+  "source": "fn main()->int{if false{if !(false){print(99);}else{print(55);}}else{print(66);}return 0;}",
+  "stdout": "66\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}

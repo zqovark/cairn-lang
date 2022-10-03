@@ -1,0 +1,7 @@
+{
+  "source": "fn main()->int{let n:int=0;let s:int=0;while n<2{n=n+1;if n%2==0{continue;}s=s+n;}print(s);return 0;}",
+  "stdout": "1\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
