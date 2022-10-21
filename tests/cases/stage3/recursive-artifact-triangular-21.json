@@ -1,0 +1,7 @@
+{
+  "source": "fn sum(n:int)->int{if n==0{return 0;}return n+sum(n-1);}fn main() -> int { print(sum(21)); return 0; }\n",
+  "stdout": "231\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
