@@ -1,0 +1,7 @@
+{
+  "source": "fn decide(x:bool)->int{if x{return 7;}return 8;} fn main()->int{print(decide(1 < 2));return 0;}",
+  "stdout": "7\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}

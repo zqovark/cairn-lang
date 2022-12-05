@@ -1,0 +1,7 @@
+{
+  "source": "fn bump(x:int)->int{print(x);return x+1;}fn main()->int{print(bump(12)+bump(13));return 0;}",
+  "stdout": "12\n13\n27\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
