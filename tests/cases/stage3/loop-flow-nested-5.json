@@ -1,0 +1,7 @@
+{
+  "source": "fn main()->int{let i:int=0;let s:int=0;while i<5{let j:int=0;while j<3{j=j+1;if j==2{continue;}s=s+1;}i=i+1;}print(s);return 0;}",
+  "stdout": "10\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
