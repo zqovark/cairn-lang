@@ -1,0 +1,9 @@
+{
+  "source": "fn f(x:int)->int{return x;}fn main() -> int { print(f((-9223372036854775807 - 1) - 1)); return 0; }\n",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "integer overflow"
+  ],
+  "compare_optimized": true
+}
