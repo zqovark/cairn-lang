@@ -1,0 +1,7 @@
+{
+  "source": "fn main()->int{if true && false{print(11);}else{print(22);}return 0;}",
+  "stdout": "22\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
