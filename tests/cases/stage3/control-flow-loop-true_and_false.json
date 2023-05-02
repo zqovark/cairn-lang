@@ -1,0 +1,7 @@
+{
+  "source": "fn main()->int{while true && false{print(33);break;}print(44);return 0;}",
+  "stdout": "44\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
