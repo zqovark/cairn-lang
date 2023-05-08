@@ -1,0 +1,9 @@
+{
+  "source": "fn main()->int{return (-9223372036854775807 - 1) / -1;}",
+  "stdout": "",
+  "status": 1,
+  "stderr_contains": [
+    "integer overflow"
+  ],
+  "compare_optimized": true
+}
