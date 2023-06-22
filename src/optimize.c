@@ -3,13 +3,8 @@
 #include <stdlib.h>
 
 static bool removable(IRInstruction in) {
-    switch (in.op) {
-    case B_CONST: case B_LOAD: case I_COPY: case B_NOT:
-    case B_EQ: case B_NE: case B_LT: case B_LE: case B_GT: case B_GE:
-        return true;
-    default:
-        return false;
-    }
+    return in.op == B_CONST || in.op == B_LOAD || in.op == I_COPY || in.op == B_NOT ||
+           (in.op >= B_EQ && in.op <= B_GE);
 }
 static void optimize_function(IRFunction *f) {
     size_t registers = (size_t)f->registers;
