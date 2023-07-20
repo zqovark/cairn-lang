@@ -1,0 +1,7 @@
+{
+  "source": "fn main() -> int { print((99) / (7)); return 0; }\n",
+  "stdout": "14\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
