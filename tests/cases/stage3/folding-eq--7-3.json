@@ -1,0 +1,7 @@
+{
+  "source": "fn main() -> int { print((-7) == (3)); return 0; }\n",
+  "stdout": "false\n",
+  "status": 0,
+  "compare_optimized": true,
+  "roundtrip": true
+}
